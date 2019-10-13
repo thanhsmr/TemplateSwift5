@@ -1,21 +1,22 @@
 import UIKit
+import JGProgressHUD
 
 class BaseViewController: UIViewController {
     
-    var errorView : UIView?
-    var baseLoadingView : UIView?
-    var lbErrorView : UILabel?
-    var imageError : UIImageView?
-    var tapErrorLabelGesture : UITapGestureRecognizer?
-    var indicatorView: UIActivityIndicatorView?
-    var isFakeNavigationBar = false
+    let hud = JGProgressHUD(style: .dark)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        configUI()
     }
-    
+            
+    func configUI() {
+        print("=======" + self.description)
+//        self.edgesForExtendedLayout = []
+        configBackButton()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -29,29 +30,72 @@ class BaseViewController: UIViewController {
     }
 
 
+    func configBackButton(){
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        self.navigationItem.backBarButtonItem = backItem
+    }
     
-//    func showLoadingView() {
-//        if let vLoading = self.baseLoadingView {
-//            if let _ = vLoading.superview {
-//
-//            } else {
-//                self.view.addSubview(vLoading)
-//            }
-//        } else {
-//            self.baseLoadingView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height - ( Utils.mDelegate().tabbarIsHidden() ? 0 : 49) - 20))
-//            indicatorView = UIActivityIndicatorView.init(frame: CGRect.init(x: self.view.frame.size.width/2 - 15, y: (self.baseLoadingView?.frame.size.height)!/2 - 15, width: 30, height: 30))
-//            indicatorView?.startAnimating()
-//            self.baseLoadingView?.addSubview(indicatorView!)
-//            self.view.addSubview(self.baseLoadingView!)
-//        }
-//    }
-    
-    func hideLoadingView() {
-        if let vLoading = self.baseLoadingView {
-            vLoading.removeFromSuperview()
+    func showAlert(_ message: String, _ title: String = "") {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Đồng ý", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showConfirmAlert(_ message: String, _ title: String = "", okAction: @escaping ((UIAlertAction) -> Swift.Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction.init(title: "Đồng ý", style: UIAlertAction.Style.default, handler: okAction))
+        alert.addAction(UIAlertAction(title: "Huỷ", style: UIAlertAction.Style.cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showMessage(_ message: String, _ title: String = "") {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Đồng ý", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showMessage(_ message: String, _ title: String = "", okAction: @escaping ((UIAlertAction) -> Swift.Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Đồng ý", style: UIAlertAction.Style.default, handler: okAction))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showAlert(_ message: String, _ title: String = "", _ okTitle: String = "", _ cancelTitle: String = "", okAction: @escaping ((UIAlertAction) -> Swift.Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction.init(title: okTitle, style: UIAlertAction.Style.default, handler: okAction))
+        alert.addAction(UIAlertAction(title: cancelTitle, style: UIAlertAction.Style.cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showAlert(_ message: String, _ title: String = "", _ okTitle: String = "", _ cancelTitle: String = "", okAction: @escaping ((UIAlertAction) -> Swift.Void), cancelAction: @escaping ((UIAlertAction) -> Swift.Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction.init(title: okTitle, style: UIAlertAction.Style.default, handler: okAction))
+        alert.addAction(UIAlertAction(title: cancelTitle, style: UIAlertAction.Style.cancel, handler: cancelAction))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showLoading(inView : UIView) {
+        DispatchQueue.main.async {
+            self.hud.show(in: inView)
         }
+    }
+
+    func showLoading() {
+        DispatchQueue.main.async {
+            self.hud.show(in: self.view)
+        }
+    }
+
+    func showLoadingInView(_ inView: UIView) {
+        DispatchQueue.main.async {
+            self.hud.show(in: inView)
+        }
+    }
+
+    func hideLoading() {
+        hud.dismiss()
     }
     
 }
-
 extension BaseViewController: ResponseUIViewController {}

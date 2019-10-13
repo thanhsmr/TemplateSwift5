@@ -34,10 +34,6 @@ struct Constants {
         static let AccessTokenType = "access-token"
         static let ContentType = "Content-Type"
         static let FormUrlEncoded = "application/x-www-form-urlencoded"
-        static let UserNameHeader = "user"
-        static let PasswordHeader = "password"
-        static let UserNameHeaderValue = "tinngan"
-        static let PasswordHeaderValue = "191f1f632d69180e6228d26849d34d081a3b8d8aa9197eba0f70530ffe698ba80108bfb075c43e82081e245ccb63f6a39107327b2c1d053469bdf4f09bc1e820"
         
         // params
     }

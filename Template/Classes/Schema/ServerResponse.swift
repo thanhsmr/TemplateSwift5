@@ -1,18 +1,12 @@
 import Foundation
-import ObjectMapper
 
-class ServerResponse: Mappable{
+struct ServerResponse: Codable {
     
-    var error : AnyObject?
-    var data : AnyObject?
+    var error : String?
+    var data : String?
     
-    required convenience init?(map: Map) {
-        self.init()
-    }
-    
-    func mapping(map: Map)
-    {
-        error <- map["error"]
-        data <- map["data"]
+    private enum CodingKeys: String, CodingKey {
+        case error = "error"
+        case data = "data"
     }
 }

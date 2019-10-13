@@ -1,6 +1,5 @@
 import Foundation
 import PromiseKit
-import ObjectMapper
 import AVKit
 
 class CacheManager {

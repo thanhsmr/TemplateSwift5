@@ -1,6 +1,5 @@
 import Foundation
 import Alamofire
-import ObjectMapper
 
 class AuthService {
     
@@ -13,23 +12,16 @@ class AuthService {
         
         return ServiceFactory.post(url: Constants.API.RequestAccessToken, parameters: parameters) { response in
             if response.result.isSuccess, response.response?.statusCode == 200 {
-                if let serverResponse = Mapper<ServerResponse>().map(JSONObject: response.result.value) {
-                    if serverResponse.error is NSNull {
-                        let userInfo: [NSObject : AnyObject] =
-                            [
-                                NSLocalizedDescriptionKey as NSObject :  NSLocalizedString("Error", value: serverResponse.error as! String, comment: "") as AnyObject
-                        ]
-                        
-                        let error = NSError(domain: "", code: 0, userInfo: userInfo as? [String : Any])
-                        fail(error)
-                        return
-
-                    } else {
-                        if let token = Mapper<Token>().map(JSONObject: serverResponse.data) {
-                            completion(token)
-                            return
-                        }
+                do {
+                    let model: Token = try JSONDecoder().decode(Token.self, from: response.data ?? Data())
+                    completion(model)
+                } catch let error {
+                    if let decodingError = (error as? DecodingError) {
+                        print(decodingError)
                     }
+                    let userInfo: [NSObject : AnyObject] = [NSLocalizedDescriptionKey as NSObject :  NSLocalizedString("Error", value: "", comment: "") as AnyObject]
+                    let error = NSError(domain: "", code: 0, userInfo: userInfo as? [String : Any])
+                    fail(error)
                 }
             }
             
