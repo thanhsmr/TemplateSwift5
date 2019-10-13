@@ -14,9 +14,7 @@ class ServiceFactory {
         
         let header = [Constants.Parameter.Accept: Constants.Parameter.ApplicationJson,
                       Constants.Parameter.AccessTokenType: Context.getAccessToken(),
-                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded,
-                      Constants.Parameter.UserNameHeader : Constants.Parameter.UserNameHeaderValue,
-                      Constants.Parameter.PasswordHeader : Constants.Parameter.PasswordHeaderValue]
+                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded]
     
         let encoding = URLEncoding.default
         let sm = Alamofire.SessionManager()
@@ -33,9 +31,7 @@ class ServiceFactory {
         
         let header = [Constants.Parameter.Accept: Constants.Parameter.ApplicationJson,
                       Constants.Parameter.AccessTokenType: Context.getAccessToken(),
-                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded,
-                      Constants.Parameter.UserNameHeader : Constants.Parameter.UserNameHeaderValue,
-                      Constants.Parameter.PasswordHeader : Constants.Parameter.PasswordHeaderValue]
+                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded]
         
         let sm = Alamofire.SessionManager()
         sm.adapter = ServiceFactory.oauthHandler
@@ -53,9 +49,7 @@ class ServiceFactory {
         
         let header = [Constants.Parameter.Accept: Constants.Parameter.ApplicationJson,
                       Constants.Parameter.AccessTokenType: Context.getAccessToken(),
-                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded,
-                      Constants.Parameter.UserNameHeader : Constants.Parameter.UserNameHeaderValue,
-                      Constants.Parameter.PasswordHeader : Constants.Parameter.PasswordHeaderValue]
+                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded]
         
         let encoding = URLEncoding.default
         let sm = Alamofire.SessionManager()
@@ -73,9 +67,7 @@ class ServiceFactory {
         
         let header = [Constants.Parameter.Accept: Constants.Parameter.ApplicationJson,
                       Constants.Parameter.AccessTokenType: Context.getAccessToken(),
-                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded,
-                      Constants.Parameter.UserNameHeader : Constants.Parameter.UserNameHeaderValue,
-                      Constants.Parameter.PasswordHeader : Constants.Parameter.PasswordHeaderValue]
+                      Constants.Parameter.ContentType : Constants.Parameter.FormUrlEncoded]
         
         let encoding = URLEncoding.default
         let sm = Alamofire.SessionManager()
